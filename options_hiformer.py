@@ -16,23 +16,12 @@ parser.add_argument('--num_workers', type=int, default=16, help='number of data 
 parser.add_argument('--num_gpus', type=int, default=2, help='number of GPUs to use for training')
 
 # Model Parameters
-parser.add_argument('--patch_size', type=int, default=128, help='patch size of input images')
+parser.add_argument('--patch_size', type=int, default=768, help='patch size of input images')
 
-# Degradation Types for UHD Image Restoration
-# Available types: uhd-haze, uhd-blur, uhd-ll, uhd-snow, lol4k, rain4k
-parser.add_argument('--de_type', nargs='+', 
-                    default=['uhd-haze'],
-                    help='degradation types: uhd-haze, uhd-blur, uhd-ll, uhd-snow, lol4k, rain4k')
 
 # Data Paths
 parser.add_argument('--data_file_dir', type=str, default='data_dir/', 
                     help='directory containing data file lists')
-parser.add_argument('--denoise_dir', type=str, default='data/Train/Denoise/',
-                    help='directory for denoising clean images')
-parser.add_argument('--derain_dir', type=str, default='data/Train/Derain/',
-                    help='directory for deraining images')
-parser.add_argument('--dehaze_dir', type=str, default='data/Train/Dehaze/',
-                    help='directory for dehazing images')
 
 # Output Paths
 parser.add_argument('--output_path', type=str, default='output/', 

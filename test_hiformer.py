@@ -19,10 +19,8 @@ from utils.val_utils import AverageMeter, compute_psnr_ssim
 from utils.image_io import save_image_tensor
 from net.hiformer import HiFormer
 
-import lightning.pytorch as pl
 
-
-class HiFormerModel(pl.LightningModule):
+class HiFormerModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.net = HiFormer(
@@ -41,12 +39,20 @@ class HiFormerModel(pl.LightningModule):
     def forward(self, x):
         return self.net(x)
 
+def load_checkpoint(model, ckpt_path):
+    try:
+        checkpoint = torch.load(ckpt_path, map_location='cpu', weights_only=False)
+    except TypeError:
+        checkpoint = torch.load(ckpt_path, map_location='cpu')
+    state_dict = checkpoint.get('state_dict', checkpoint)
+    model.load_state_dict(state_dict, strict=True)
+    return model
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # Input Parameters
     parser.add_argument('--cuda', type=int, default=0)
-    parser.add_argument('--valid_data_dir', type=str, default="data/Test/UHD_haze/test/input/", 
+    parser.add_argument('--valid_data_dir', type=str, default="data/Test/UHD_haze/", 
                         help='save path of test images')
     parser.add_argument('--output_path', type=str, default="output/", 
                         help='output save path')
@@ -62,7 +68,7 @@ if __name__ == '__main__':
     print("CKPT name : {}".format(ckpt_path))
 
     # Load model
-    net = HiFormerModel.load_from_checkpoint(ckpt_path).cuda()
+    net = load_checkpoint(HiFormerModel(), ckpt_path).cuda()
     net.eval()
 
     data_path = testopt.valid_data_dir

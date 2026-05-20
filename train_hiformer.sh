@@ -13,20 +13,14 @@ export CUDA_VISIBLE_DEVICES=0,1  # Modify based on available GPUs
 # Training configuration
 EPOCHS=500
 BATCH_SIZE=8
-PATCH_SIZE=128
+PATCH_SIZE=768
 NUM_GPUS=2
 NUM_WORKERS=16
 LR=0.0002
 
-# UHD Degradation types (modify as needed)
-# Options: uhd-haze, uhd-blur, uhd-ll, uhd-snow, lol4k, rain4k
-DE_TYPES="uhd-haze"
 
 # Paths (modify according to your data location)
 DATA_DIR="data_dir/"
-DENOISE_DIR="data/Train/Denoise/"
-DERAIN_DIR="data/Train/Derain/"
-DEHAZE_DIR="data/Train/Dehaze/"
 
 # Checkpoint directory
 CKPT_DIR="ckpt/hiformer/"
@@ -45,9 +39,6 @@ python train_hiformer.py \
     --lr ${LR} \
     --de_type ${DE_TYPES} \
     --data_file_dir ${DATA_DIR} \
-    --denoise_dir ${DENOISE_DIR} \
-    --derain_dir ${DERAIN_DIR} \
-    --dehaze_dir ${DEHAZE_DIR} \
     --ckpt_dir ${CKPT_DIR} \
     --wblogger ${WBLOGGER} \
     --use_amp \

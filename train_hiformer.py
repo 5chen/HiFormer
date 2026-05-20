@@ -12,7 +12,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
-from utils.dataset_utils import PromptTrainDataset
+from utils.dataset_utils import TrainDataset
 from net.hiformer import HiFormer
 from utils.schedulers import LinearWarmupCosineAnnealingLR
 import numpy as np
@@ -49,7 +49,7 @@ class HiFormerModel(pl.LightningModule):
     
     def training_step(self, batch, batch_idx):
         # training_step defines the train loop.
-        ([clean_name, de_id], degrad_patch, clean_patch) = batch
+        (degrad_patch, clean_patch) = batch
         restored = self.net(degrad_patch)
 
         loss = self.loss_fn(restored, clean_patch)
@@ -104,7 +104,7 @@ def main():
         logger = TensorBoardLogger(save_dir="logs/")
 
     # Setup dataset
-    trainset = PromptTrainDataset(opt)
+    trainset = TrainDataset(opt)
     trainloader = DataLoader(
         trainset,
         batch_size=opt.batch_size,

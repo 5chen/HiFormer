@@ -18,9 +18,7 @@ MODE=2  # 0: denoise, 1: derain, 2: dehaze (UHD), 3: all
 CKPT_NAME="hiformer-epoch-499.ckpt"
 
 # Test data paths
-DENOISE_PATH="test/denoise/"
-DERAIN_PATH="test/derain/"
-DEHAZE_PATH="test/dehaze/"
+DATA_DIR="test/denoise/"
 OUTPUT_PATH="output/"
 
 # Create output directory
@@ -30,9 +28,7 @@ mkdir -p ${OUTPUT_PATH}
 python test_hiformer.py \
     --cuda ${CUDA_ID} \
     --mode ${MODE} \
-    --denoise_path ${DENOISE_PATH} \
-    --derain_path ${DERAIN_PATH} \
-    --dehaze_path ${DEHAZE_PATH} \
+    --valid_data_dir ${DATA_DIR} \
     --output_path ${OUTPUT_PATH} \
     --ckpt_name ${CKPT_NAME}
 
