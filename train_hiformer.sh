@@ -20,7 +20,7 @@ LR=0.0002
 
 
 # Paths (modify according to your data location)
-DATA_DIR="data_dir/"
+DATA_DIR="data/Train/"
 
 # Checkpoint directory
 CKPT_DIR="ckpt/hiformer/"
@@ -37,7 +37,6 @@ python train_hiformer.py \
     --num_gpus ${NUM_GPUS} \
     --num_workers ${NUM_WORKERS} \
     --lr ${LR} \
-    --de_type ${DE_TYPES} \
     --data_file_dir ${DATA_DIR} \
     --ckpt_dir ${CKPT_DIR} \
     --wblogger ${WBLOGGER} \
